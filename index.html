@@ -86,13 +86,97 @@
     /* Chat Screen */
     #chat-screen {
       display: none;
-      flex-direction: column;
       height: 100vh;
       height: 100dvh;
     }
 
     #chat-screen.active {
       display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: #fafafa;
+      border-right: 1px solid #e5e5e5;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .sidebar-header h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .new-chat-btn-sidebar {
+      width: 100%;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .new-chat-btn-sidebar:hover {
+      background: #2a2a2a;
+    }
+
+    .chat-history {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .chat-history-item {
+      padding: 10px 12px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #666;
+      transition: all 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-history-item:hover {
+      background: #f0f0f0;
+      color: #1a1a1a;
+    }
+
+    .chat-history-item.active {
+      background: #e5e5e5;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Header */
@@ -116,27 +200,7 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .new-chat-btn {
-      background: white;
-      border: 1px solid #e5e5e5;
-      color: #1a1a1a;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      transition: all 0.2s;
-      font-weight: 500;
-    }
-
-    .new-chat-btn:hover {
-      background: #f5f5f5;
+      gap: 12px;
     }
 
     .model-selector {
@@ -164,7 +228,7 @@
       align-items: center;
       gap: 6px;
       font-size: 13px;
-      padding: 8px 12px;
+      padding: 8px 16px;
       border-radius: 8px;
       transition: all 0.2s;
       font-weight: 500;
@@ -434,42 +498,21 @@
 
     /* Mobile Responsive */
     @media (max-width: 768px) {
-      .header {
-        padding: 12px 16px;
+      .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        transition: left 0.3s;
       }
 
-      .header h1 {
-        font-size: 18px;
+      .sidebar.open {
+        left: 0;
       }
 
-      .header-right {
-        gap: 6px;
-      }
-
-      .new-chat-btn, .model-selector, .logout-btn {
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-
-      .messages-container {
-        padding: 16px 12px;
-      }
-
-      .message-content {
-        font-size: 14px;
-        padding: 12px 14px;
-      }
-
-      .message.user .message-content {
-        max-width: 85%;
-      }
-
-      .input-container {
-        padding: 12px;
-      }
-
-      #message-input {
-        font-size: 16px;
+      .main-content {
+        width: 100%;
       }
     }
   </style>
@@ -495,27 +538,21 @@
 
   <!-- Chat Screen -->
   <div id="chat-screen">
-    <!-- Header -->
-    <div class="header">
-      <div class="header-left">
-        <h1>ASIAI</h1>
-      </div>
-      <div class="header-right">
-        <button class="new-chat-btn" id="new-chat-btn">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>Chat History</h2>
+        <button class="new-chat-btn-sidebar" id="new-chat-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          New
+          New Chat
         </button>
-        <select class="model-selector" id="model-selector">
-          <option value="openai/gpt-4o">GPT-4o</option>
-          <option value="openai/gpt-4o-mini">GPT-4o-mini</option>
-          <option value="mistralai/mistral-medium-3-25.05">Mistral Medium 3</option>
-          <option value="cohere/command-a">Cohere Command A</option>
-          <option value="mistralai/codestral-25.01">Codestral 25.01</option>
-        </select>
-        <button class="logout-btn" id="logout-btn">
+      </div>
+      <div class="chat-history" id="chat-history"></div>
+      <div class="sidebar-footer">
+        <button class="logout-btn" id="logout-btn" style="width: 100%;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
             <polyline points="16 17 21 12 16 7"></polyline>
@@ -526,42 +563,61 @@
       </div>
     </div>
 
-    <!-- Messages -->
-    <div class="messages-container" id="messages">
-      <div class="empty-state">
-        <h2>Start a conversation</h2>
-        <p>Type a message or upload an image</p>
-      </div>
-    </div>
-
-    <!-- Input -->
-    <div class="input-container">
-      <div class="input-wrapper">
-        <div class="file-upload-wrapper">
-          <label class="file-upload-btn" id="file-upload-label" for="file-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <circle cx="8.5" cy="8.5" r="1.5"></circle>
-              <polyline points="21 15 16 10 5 21"></polyline>
-            </svg>
-          </label>
-          <input type="file" id="file-input" accept="image/*">
-          <div class="file-preview" id="file-preview">
-            <span id="file-name"></span>
-            <button id="file-remove">×</button>
-          </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <h1>ASIAI</h1>
         </div>
-        <textarea 
-          id="message-input" 
-          placeholder="Type a message..." 
-          rows="1"
-        ></textarea>
-        <button id="send-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
+        <div class="header-right">
+          <select class="model-selector" id="model-selector">
+            <option value="openai/gpt-4o">GPT-4o</option>
+            <option value="openai/gpt-4o-mini">GPT-4o-mini</option>
+            <option value="mistralai/Mistral Medium 3 (25.05)">Mistral Medium 3 (25.05)</option>
+            <option value="cohere/Cohere Command A">Cohere Command A</option>
+            <option value="mistralai/Codestral 25.01">Codestral 25.01</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages-container" id="messages">
+        <div class="empty-state">
+          <h2>Start a conversation</h2>
+          <p>Type a message or upload an image</p>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-container">
+        <div class="input-wrapper">
+          <div class="file-upload-wrapper">
+            <label class="file-upload-btn" id="file-upload-label" for="file-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </label>
+            <input type="file" id="file-input" accept="image/*">
+            <div class="file-preview" id="file-preview">
+              <span id="file-name"></span>
+              <button id="file-remove">×</button>
+            </div>
+          </div>
+          <textarea 
+            id="message-input" 
+            placeholder="Type a message..." 
+            rows="1"
+          ></textarea>
+          <button id="send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -584,12 +640,93 @@
     const filePreview = document.getElementById('file-preview');
     const fileName = document.getElementById('file-name');
     const fileRemove = document.getElementById('file-remove');
+    const chatHistory = document.getElementById('chat-history');
 
     let accessToken = null;
     let messages = [];
     let isLoading = false;
     let uploadedFile = null;
     let uploadedImageBase64 = null;
+    let chatSessions = [];
+    let currentChatId = null;
+
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    function saveChatSessions() {
+      localStorage.setItem('chatSessions', JSON.stringify(chatSessions));
+    }
+
+    function loadChatSessions() {
+      const saved = localStorage.getItem('chatSessions');
+      if (saved) {
+        chatSessions = JSON.parse(saved);
+        renderChatHistory();
+      }
+    }
+
+    function renderChatHistory() {
+      chatHistory.innerHTML = '';
+      chatSessions.forEach(session => {
+        const item = document.createElement('div');
+        item.className = 'chat-history-item';
+        if (session.id === currentChatId) {
+          item.classList.add('active');
+        }
+        item.textContent = session.title;
+        item.onclick = () => loadChat(session.id);
+        chatHistory.appendChild(item);
+      });
+    }
+
+    function saveCurrentChat() {
+      if (messages.length === 0) return;
+
+      const existingIndex = chatSessions.findIndex(s => s.id === currentChatId);
+      const title = messages[0]?.content?.substring(0, 30) || 'New Chat';
+      
+      const chatData = {
+        id: currentChatId,
+        title: title,
+        messages: messages,
+        timestamp: Date.now()
+      };
+
+      if (existingIndex >= 0) {
+        chatSessions[existingIndex] = chatData;
+      } else {
+        chatSessions.unshift(chatData);
+      }
+
+      saveChatSessions();
+      renderChatHistory();
+    }
+
+    function loadChat(chatId) {
+      const session = chatSessions.find(s => s.id === chatId);
+      if (session) {
+        currentChatId = chatId;
+        messages = session.messages;
+        renderMessages();
+        renderChatHistory();
+      }
+    }
+
+    function renderMessages() {
+      messagesContainer.innerHTML = '';
+      messages.forEach(msg => {
+        if (Array.isArray(msg.content)) {
+          const textPart = msg.content.find(c => c.type === 'text');
+          const imagePart = msg.content.find(c => c.type === 'image_url');
+          if (textPart && imagePart) {
+            addMessageWithImage('user', textPart.text, imagePart.image_url.url, false);
+          }
+        } else {
+          addMessage(msg.role, msg.content, false);
+        }
+      });
+    }
 
     function updateFileUploadVisibility() {
       const selectedModel = modelSelector.value;
@@ -616,6 +753,7 @@
       if (savedToken) {
         accessToken = savedToken;
         showChatScreen();
+        loadChatSessions();
         updateFileUploadVisibility();
       }
     }
@@ -640,6 +778,7 @@
           sessionStorage.setItem('github_access_token', data.access_token);
           window.history.replaceState({}, document.title, '/');
           showChatScreen();
+          loadChatSessions();
           updateFileUploadVisibility();
         } else {
           alert('Login failed: ' + (data.error || 'Unknown error'));
@@ -653,14 +792,22 @@
     function handleLogout() {
       accessToken = null;
       messages = [];
+      chatSessions = [];
+      currentChatId = null;
       sessionStorage.removeItem('github_access_token');
+      localStorage.removeItem('chatSessions');
       showLoginScreen();
     }
 
     function handleNewChat() {
+      if (messages.length > 0) {
+        saveCurrentChat();
+      }
+      currentChatId = generateId();
       messages = [];
       messagesContainer.innerHTML = '<div class="empty-state"><h2>Start a conversation</h2><p>Type a message or upload an image</p></div>';
       clearFile();
+      renderChatHistory();
     }
 
     function showLoginScreen() {
@@ -671,6 +818,9 @@
     function showChatScreen() {
       loginScreen.classList.add('hidden');
       chatScreen.classList.add('active');
+      if (!currentChatId) {
+        currentChatId = generateId();
+      }
     }
 
     async function sendMessage() {
@@ -680,10 +830,10 @@
       let userContent;
       if (uploadedImageBase64) {
         userContent = [
-          { type: "text", text: text || "What's in this image?" },
+          { type: "text", text: text || "" },
           { type: "image_url", image_url: { url: uploadedImageBase64 } }
         ];
-        addMessageWithImage('user', text || "What's in this image?", uploadedImageBase64);
+        addMessageWithImage('user', text, uploadedImageBase64);
       } else {
         userContent = text;
         addMessage('user', text);
@@ -757,6 +907,7 @@
 
         if (assistantMessage) {
           messages.push({ role: 'assistant', content: assistantMessage });
+          saveCurrentChat();
         }
 
       } catch (error) {
@@ -797,7 +948,7 @@
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    function addMessage(role, content) {
+    function addMessage(role, content, save = true) {
       const emptyState = messagesContainer.querySelector('.empty-state');
       if (emptyState) emptyState.remove();
 
@@ -818,7 +969,7 @@
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    function addMessageWithImage(role, text, imageData) {
+    function addMessageWithImage(role, text, imageData, save = true) {
       const emptyState = messagesContainer.querySelector('.empty-state');
       if (emptyState) emptyState.remove();
 
