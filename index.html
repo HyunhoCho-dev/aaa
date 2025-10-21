@@ -24,6 +24,7 @@
       justify-content: center;
       min-height: 100vh;
       background: #fafafa;
+      padding: 20px;
     }
 
     .login-card {
@@ -87,6 +88,7 @@
       display: none;
       flex-direction: column;
       height: 100vh;
+      height: 100dvh;
     }
 
     #chat-screen.active {
@@ -101,6 +103,7 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #e5e5e5;
+      flex-shrink: 0;
     }
 
     .header-left h1 {
@@ -113,7 +116,8 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .new-chat-btn {
@@ -124,8 +128,8 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
-      padding: 8px 16px;
+      font-size: 13px;
+      padding: 8px 12px;
       border-radius: 8px;
       transition: all 0.2s;
       font-weight: 500;
@@ -136,10 +140,10 @@
     }
 
     .model-selector {
-      padding: 8px 16px;
+      padding: 8px 12px;
       border: 1px solid #e5e5e5;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13px;
       background: white;
       cursor: pointer;
       transition: all 0.2s;
@@ -159,8 +163,8 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
-      padding: 8px 16px;
+      font-size: 13px;
+      padding: 8px 12px;
       border-radius: 8px;
       transition: all 0.2s;
       font-weight: 500;
@@ -175,11 +179,12 @@
     .messages-container {
       flex: 1;
       overflow-y: auto;
-      padding: 24px;
+      overflow-x: hidden;
+      padding: 24px 16px;
       display: flex;
       flex-direction: column;
       gap: 20px;
-      background: #fafafa;
+      background: #ffffff;
       max-width: 900px;
       margin: 0 auto;
       width: 100%;
@@ -207,6 +212,7 @@
       display: flex;
       flex-direction: column;
       animation: slideIn 0.3s ease-out;
+      gap: 8px;
     }
 
     @keyframes slideIn {
@@ -224,7 +230,6 @@
       font-size: 13px;
       font-weight: 600;
       color: #666;
-      margin-bottom: 8px;
     }
 
     .message.user .message-role {
@@ -238,21 +243,29 @@
       white-space: pre-wrap;
       font-size: 15px;
       line-height: 1.6;
+      border: 1px solid #e5e5e5;
     }
 
     .message.user .message-content {
-      background: #1a1a1a;
-      color: white;
+      background: #ffffff;
+      color: #1a1a1a;
       align-self: flex-end;
       max-width: 80%;
     }
 
     .message.assistant .message-content {
-      background: white;
+      background: #ffffff;
       color: #1a1a1a;
-      border: 1px solid #e5e5e5;
+      border: none;
+      padding: 0;
       align-self: flex-start;
       max-width: 100%;
+    }
+
+    .message-image {
+      max-width: 300px;
+      border-radius: 8px;
+      margin-top: 8px;
     }
 
     .loading {
@@ -294,14 +307,15 @@
     .input-container {
       background: white;
       border-top: 1px solid #e5e5e5;
-      padding: 20px 24px;
+      padding: 16px;
+      flex-shrink: 0;
     }
 
     .input-wrapper {
       max-width: 900px;
       margin: 0 auto;
       display: flex;
-      gap: 12px;
+      gap: 8px;
       align-items: flex-end;
     }
 
@@ -313,7 +327,7 @@
       background: #f5f5f5;
       border: 1px solid #e5e5e5;
       border-radius: 10px;
-      padding: 12px;
+      padding: 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -323,6 +337,10 @@
 
     .file-upload-btn:hover {
       background: #e5e5e5;
+    }
+
+    .file-upload-btn.hidden {
+      display: none;
     }
 
     .file-upload-btn svg {
@@ -348,10 +366,15 @@
       display: none;
       white-space: nowrap;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .file-preview.active {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .file-preview button {
@@ -359,15 +382,16 @@
       border: none;
       color: #999;
       cursor: pointer;
-      margin-left: 8px;
-      font-size: 16px;
+      font-size: 18px;
+      padding: 0;
+      line-height: 1;
     }
 
     #message-input {
       flex: 1;
       border: 1px solid #e5e5e5;
       border-radius: 12px;
-      padding: 14px 18px;
+      padding: 12px 16px;
       font-size: 15px;
       resize: none;
       font-family: inherit;
@@ -385,7 +409,7 @@
       color: white;
       border: none;
       border-radius: 10px;
-      padding: 12px 20px;
+      padding: 10px 18px;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
@@ -406,6 +430,47 @@
 
     .hidden {
       display: none !important;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 12px 16px;
+      }
+
+      .header h1 {
+        font-size: 18px;
+      }
+
+      .header-right {
+        gap: 6px;
+      }
+
+      .new-chat-btn, .model-selector, .logout-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+
+      .messages-container {
+        padding: 16px 12px;
+      }
+
+      .message-content {
+        font-size: 14px;
+        padding: 12px 14px;
+      }
+
+      .message.user .message-content {
+        max-width: 85%;
+      }
+
+      .input-container {
+        padding: 12px;
+      }
+
+      #message-input {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -437,19 +502,21 @@
       </div>
       <div class="header-right">
         <button class="new-chat-btn" id="new-chat-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          New Chat
+          New
         </button>
         <select class="model-selector" id="model-selector">
-          <option value="openai/gpt-4.1">GPT-4.1</option>
           <option value="openai/gpt-4o">GPT-4o</option>
           <option value="openai/gpt-4o-mini">GPT-4o-mini</option>
+          <option value="mistralai/mistral-medium-3-25.05">Mistral Medium 3</option>
+          <option value="cohere/command-a">Cohere Command A</option>
+          <option value="mistralai/codestral-25.01">Codestral 25.01</option>
         </select>
         <button class="logout-btn" id="logout-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
             <polyline points="16 17 21 12 16 7"></polyline>
             <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -463,7 +530,7 @@
     <div class="messages-container" id="messages">
       <div class="empty-state">
         <h2>Start a conversation</h2>
-        <p>Type a message or upload a file</p>
+        <p>Type a message or upload an image</p>
       </div>
     </div>
 
@@ -471,12 +538,14 @@
     <div class="input-container">
       <div class="input-wrapper">
         <div class="file-upload-wrapper">
-          <label class="file-upload-btn" for="file-input">
+          <label class="file-upload-btn" id="file-upload-label" for="file-input">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"></path>
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
             </svg>
           </label>
-          <input type="file" id="file-input" accept="image/*,.pdf,.txt,.doc,.docx">
+          <input type="file" id="file-input" accept="image/*">
           <div class="file-preview" id="file-preview">
             <span id="file-name"></span>
             <button id="file-remove">×</button>
@@ -511,6 +580,7 @@
     const sendBtn = document.getElementById('send-btn');
     const modelSelector = document.getElementById('model-selector');
     const fileInput = document.getElementById('file-input');
+    const fileUploadLabel = document.getElementById('file-upload-label');
     const filePreview = document.getElementById('file-preview');
     const fileName = document.getElementById('file-name');
     const fileRemove = document.getElementById('file-remove');
@@ -519,6 +589,19 @@
     let messages = [];
     let isLoading = false;
     let uploadedFile = null;
+    let uploadedImageBase64 = null;
+
+    function updateFileUploadVisibility() {
+      const selectedModel = modelSelector.value;
+      const isGPTModel = selectedModel.startsWith('openai/gpt');
+      
+      if (isGPTModel) {
+        fileUploadLabel.classList.remove('hidden');
+      } else {
+        fileUploadLabel.classList.add('hidden');
+        clearFile();
+      }
+    }
 
     function init() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -533,6 +616,7 @@
       if (savedToken) {
         accessToken = savedToken;
         showChatScreen();
+        updateFileUploadVisibility();
       }
     }
 
@@ -556,6 +640,7 @@
           sessionStorage.setItem('github_access_token', data.access_token);
           window.history.replaceState({}, document.title, '/');
           showChatScreen();
+          updateFileUploadVisibility();
         } else {
           alert('Login failed: ' + (data.error || 'Unknown error'));
         }
@@ -574,7 +659,7 @@
 
     function handleNewChat() {
       messages = [];
-      messagesContainer.innerHTML = '<div class="empty-state"><h2>Start a conversation</h2><p>Type a message or upload a file</p></div>';
+      messagesContainer.innerHTML = '<div class="empty-state"><h2>Start a conversation</h2><p>Type a message or upload an image</p></div>';
       clearFile();
     }
 
@@ -590,13 +675,20 @@
 
     async function sendMessage() {
       const text = messageInput.value.trim();
-      if ((!text && !uploadedFile) || isLoading) return;
+      if ((!text && !uploadedImageBase64) || isLoading) return;
 
-      const userContent = uploadedFile 
-        ? `[File: ${uploadedFile.name}]\n${text}` 
-        : text;
+      let userContent;
+      if (uploadedImageBase64) {
+        userContent = [
+          { type: "text", text: text || "What's in this image?" },
+          { type: "image_url", image_url: { url: uploadedImageBase64 } }
+        ];
+        addMessageWithImage('user', text || "What's in this image?", uploadedImageBase64);
+      } else {
+        userContent = text;
+        addMessage('user', text);
+      }
 
-      addMessage('user', userContent);
       messageInput.value = '';
       clearFile();
       isLoading = true;
@@ -614,11 +706,13 @@
           },
           body: JSON.stringify({
             model: selectedModel,
-            messages: messages,
+            messages: [...messages, { role: 'user', content: userContent }],
             temperature: 0.7,
             stream: true,
           }),
         });
+
+        messages.push({ role: 'user', content: userContent });
 
         hideLoading();
 
@@ -704,8 +798,6 @@
     }
 
     function addMessage(role, content) {
-      messages.push({ role, content });
-
       const emptyState = messagesContainer.querySelector('.empty-state');
       if (emptyState) emptyState.remove();
 
@@ -719,6 +811,36 @@
       const contentDiv = document.createElement('div');
       contentDiv.className = 'message-content';
       contentDiv.textContent = content;
+      
+      messageDiv.appendChild(roleDiv);
+      messageDiv.appendChild(contentDiv);
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function addMessageWithImage(role, text, imageData) {
+      const emptyState = messagesContainer.querySelector('.empty-state');
+      if (emptyState) emptyState.remove();
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${role}`;
+      
+      const roleDiv = document.createElement('div');
+      roleDiv.className = 'message-role';
+      roleDiv.textContent = 'You';
+      
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'message-content';
+      
+      if (text) {
+        const textNode = document.createTextNode(text);
+        contentDiv.appendChild(textNode);
+      }
+      
+      const img = document.createElement('img');
+      img.src = imageData;
+      img.className = 'message-image';
+      contentDiv.appendChild(img);
       
       messageDiv.appendChild(roleDiv);
       messageDiv.appendChild(contentDiv);
@@ -747,10 +869,16 @@
 
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
-      if (file) {
+      if (file && file.type.startsWith('image/')) {
         uploadedFile = file;
         fileName.textContent = file.name;
         filePreview.classList.add('active');
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          uploadedImageBase64 = event.target.result;
+        };
+        reader.readAsDataURL(file);
       }
     });
 
@@ -758,10 +886,12 @@
 
     function clearFile() {
       uploadedFile = null;
+      uploadedImageBase64 = null;
       fileInput.value = '';
       filePreview.classList.remove('active');
     }
 
+    modelSelector.addEventListener('change', updateFileUploadVisibility);
     loginBtn.addEventListener('click', handleLogin);
     logoutBtn.addEventListener('click', handleLogout);
     newChatBtn.addEventListener('click', handleNewChat);
