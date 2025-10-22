@@ -483,8 +483,96 @@
       display: none;
     }
 
+    .file-upload-btn svg {
+      width: 20px;
+      height: 20px;
+      color: #666;
+    }
 
-    
+    #file-input {
+      display: none;
+    }
+
+    .file-preview {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #666;
+      display: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-preview.active {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-preview button {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      line-height: 1;
+    }
+
+    #message-input {
+      flex: 1;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 15px;
+      resize: none;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+      max-height: 120px;
+    }
+
+    #message-input:focus {
+      border-color: #1a1a1a;
+    }
+
+    #send-btn {
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #send-btn:hover:not(:disabled) {
+      background: #2a2a2a;
+      transform: translateY(-1px);
+    }
+
+    #send-btn:disabled {
+      background: #e5e5e5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+
     /* Prompt Editor Modal */
     .prompt-modal {
       display: none;
@@ -512,12 +600,10 @@
       max-height: 80vh;
       overflow-y: auto;
       padding: 24px;
-      position: relative;
     }
 
     .prompt-modal-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
     }
@@ -525,7 +611,6 @@
     .prompt-modal-header h2 {
       font-size: 20px;
       font-weight: 600;
-      color: #1a1a1a;
     }
 
     .prompt-modal-close {
@@ -535,14 +620,11 @@
       color: #666;
       cursor: pointer;
       padding: 4px;
-      line-height: 1;
-      transition: all 0.2s;
       border-radius: 6px;
     }
 
     .prompt-modal-close:hover {
       background: #f5f5f5;
-      color: #1a1a1a;
     }
 
     .prompt-templates-grid {
@@ -552,7 +634,6 @@
 
     .prompt-template-item {
       display: flex;
-      align-items: center;
       gap: 12px;
       padding: 12px 16px;
       background: #f9f9f9;
@@ -565,16 +646,10 @@
     .prompt-template-item:hover {
       background: #f0f0f0;
       border-color: #1a1a1a;
-      transform: translateY(-2px);
-    }
-
-    .prompt-template-item:active {
-      transform: translateY(0);
     }
 
     .prompt-icon {
       font-size: 24px;
-      flex-shrink: 0;
     }
 
     .prompt-text {
@@ -584,7 +659,6 @@
     .prompt-title {
       font-size: 14px;
       font-weight: 600;
-      color: #1a1a1a;
       margin-bottom: 4px;
     }
 
@@ -599,26 +673,17 @@
       border-radius: 10px;
       padding: 10px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition: all 0.2s;
-      flex-shrink: 0;
     }
 
     .prompt-edit-btn:hover {
       background: #e5e5e5;
-      border-color: #1a1a1a;
     }
 
     .prompt-edit-btn svg {
       width: 20px;
       height: 20px;
       color: #666;
-    }
-
-    .prompt-edit-btn:hover svg {
-      color: #1a1a1a;
     }
 
 
@@ -854,8 +919,6 @@
       </div>
     </div>
   </div>
-
-
 
   <script>
     const CLIENT_ID = 'Ov23li3uJvzsuqgA9QHJ';
@@ -1330,30 +1393,24 @@
     });
 
 
-
-    
     // Prompt Modal Functionality
     const promptModal = document.getElementById('prompt-modal');
     const promptEditBtn = document.getElementById('prompt-edit-btn');
     const promptModalClose = document.getElementById('prompt-modal-close');
 
-    // null 체크 후 이벤트 리스너 추가
     if (promptEditBtn && promptModal) {
-      // 모달 열기
       promptEditBtn.addEventListener('click', () => {
         promptModal.classList.add('active');
       });
     }
 
     if (promptModalClose && promptModal) {
-      // 모달 닫기
       promptModalClose.addEventListener('click', () => {
         promptModal.classList.remove('active');
       });
     }
 
     if (promptModal) {
-      // 모달 외부 클릭 시 닫기
       promptModal.addEventListener('click', (e) => {
         if (e.target === promptModal) {
           promptModal.classList.remove('active');
@@ -1361,7 +1418,6 @@
       });
     }
 
-    // 프롬프트 템플릿 클릭
     document.querySelectorAll('.prompt-template-item').forEach(item => {
       item.addEventListener('click', () => {
         const promptText = item.getAttribute('data-prompt');
@@ -1377,8 +1433,8 @@
       });
     });
 
+
     init();
   </script>
-
 </body>
 </html>
