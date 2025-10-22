@@ -772,6 +772,91 @@
     </div>
   </div>
 
+
+  <!-- Prompt Modal -->
+  <div class="prompt-modal" id="prompt-modal">
+    <div class="prompt-modal-content">
+      <div class="prompt-modal-header">
+        <h2>✨ Prompt Templates</h2>
+        <button class="prompt-modal-close" id="prompt-modal-close">×</button>
+      </div>
+      <div class="prompt-templates-grid">
+        <div class="prompt-template-item" data-prompt="Explain this concept in simple terms for a beginner: ">
+          <div class="prompt-icon">📚</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Explain Simply</div>
+            <div class="prompt-description">Break down complex concepts</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Analyze the pros and cons of: ">
+          <div class="prompt-icon">⚖️</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Pros & Cons Analysis</div>
+            <div class="prompt-description">Balanced evaluation</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Write a professional email about: ">
+          <div class="prompt-icon">✉️</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Professional Email</div>
+            <div class="prompt-description">Formal communication</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Create a step-by-step guide for: ">
+          <div class="prompt-icon">📝</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Step-by-Step Guide</div>
+            <div class="prompt-description">Detailed instructions</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Summarize the key points of: ">
+          <div class="prompt-icon">📋</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Summarize</div>
+            <div class="prompt-description">Concise overview</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Generate creative ideas for: ">
+          <div class="prompt-icon">💡</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Brainstorm Ideas</div>
+            <div class="prompt-description">Creative thinking</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Debug and fix this code: ">
+          <div class="prompt-icon">🐛</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Debug Code</div>
+            <div class="prompt-description">Find and fix errors</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Improve and refine this text: ">
+          <div class="prompt-icon">🌐</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Improve Writing</div>
+            <div class="prompt-description">Professional polish</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Compare and contrast: ">
+          <div class="prompt-icon">🔄</div>
+          <div class="prompt-text">
+            <div class="prompt-title">Compare & Contrast</div>
+            <div class="prompt-description">Detailed comparison</div>
+          </div>
+        </div>
+        <div class="prompt-template-item" data-prompt="Explain like I'm 5 years old: ">
+          <div class="prompt-icon">👶</div>
+          <div class="prompt-text">
+            <div class="prompt-title">ELI5</div>
+            <div class="prompt-description">Ultra simple explanation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <script>
     const CLIENT_ID = 'Ov23li3uJvzsuqgA9QHJ';
     const REDIRECT_URI = window.location.origin;
@@ -1252,119 +1337,48 @@
     const promptEditBtn = document.getElementById('prompt-edit-btn');
     const promptModalClose = document.getElementById('prompt-modal-close');
 
-    // 모달 열기
-    promptEditBtn.addEventListener('click', () => {
-      promptModal.classList.add('active');
-    });
+    // null 체크 후 이벤트 리스너 추가
+    if (promptEditBtn && promptModal) {
+      // 모달 열기
+      promptEditBtn.addEventListener('click', () => {
+        promptModal.classList.add('active');
+      });
+    }
 
-    // 모달 닫기
-    promptModalClose.addEventListener('click', () => {
-      promptModal.classList.remove('active');
-    });
-
-    // 모달 외부 클릭 시 닫기
-    promptModal.addEventListener('click', (e) => {
-      if (e.target === promptModal) {
+    if (promptModalClose && promptModal) {
+      // 모달 닫기
+      promptModalClose.addEventListener('click', () => {
         promptModal.classList.remove('active');
-      }
-    });
+      });
+    }
+
+    if (promptModal) {
+      // 모달 외부 클릭 시 닫기
+      promptModal.addEventListener('click', (e) => {
+        if (e.target === promptModal) {
+          promptModal.classList.remove('active');
+        }
+      });
+    }
 
     // 프롬프트 템플릿 클릭
     document.querySelectorAll('.prompt-template-item').forEach(item => {
       item.addEventListener('click', () => {
         const promptText = item.getAttribute('data-prompt');
-        messageInput.value = promptText;
-        messageInput.focus();
-        messageInput.style.height = 'auto';
-        messageInput.style.height = (messageInput.scrollHeight) + 'px';
-        promptModal.classList.remove('active');
+        if (messageInput) {
+          messageInput.value = promptText;
+          messageInput.focus();
+          messageInput.style.height = 'auto';
+          messageInput.style.height = (messageInput.scrollHeight) + 'px';
+        }
+        if (promptModal) {
+          promptModal.classList.remove('active');
+        }
       });
     });
 
     init();
   </script>
-
-  <!-- Prompt Modal -->
-  <div class="prompt-modal" id="prompt-modal">
-    <div class="prompt-modal-content">
-      <div class="prompt-modal-header">
-        <h2>✨ Prompt Templates</h2>
-        <button class="prompt-modal-close" id="prompt-modal-close">×</button>
-      </div>
-      <div class="prompt-templates-grid">
-        <div class="prompt-template-item" data-prompt="Explain this concept in simple terms for a beginner: ">
-          <div class="prompt-icon">📚</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Explain Simply</div>
-            <div class="prompt-description">Break down complex concepts</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Analyze the pros and cons of: ">
-          <div class="prompt-icon">⚖️</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Pros & Cons Analysis</div>
-            <div class="prompt-description">Balanced evaluation</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Write a professional email about: ">
-          <div class="prompt-icon">✉️</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Professional Email</div>
-            <div class="prompt-description">Formal communication</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Create a step-by-step guide for: ">
-          <div class="prompt-icon">📝</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Step-by-Step Guide</div>
-            <div class="prompt-description">Detailed instructions</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Summarize the key points of: ">
-          <div class="prompt-icon">📋</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Summarize</div>
-            <div class="prompt-description">Concise overview</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Generate creative ideas for: ">
-          <div class="prompt-icon">💡</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Brainstorm Ideas</div>
-            <div class="prompt-description">Creative thinking</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Debug and fix this code: ">
-          <div class="prompt-icon">🐛</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Debug Code</div>
-            <div class="prompt-description">Find and fix errors</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Improve and refine this text: ">
-          <div class="prompt-icon">🌐</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Improve Writing</div>
-            <div class="prompt-description">Professional polish</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Compare and contrast: ">
-          <div class="prompt-icon">🔄</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Compare & Contrast</div>
-            <div class="prompt-description">Detailed comparison</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Explain like I'm 5 years old: ">
-          <div class="prompt-icon">👶</div>
-          <div class="prompt-text">
-            <div class="prompt-title">ELI5</div>
-            <div class="prompt-description">Ultra simple explanation</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </body>
 </html>
