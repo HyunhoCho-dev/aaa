@@ -102,13 +102,11 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      transition: transform 0.3s ease-in-out;
-      position: relative;
-      z-index: 10;
+      transition: margin-left 0.3s;
     }
 
     .sidebar.collapsed {
-      transform: translateX(-100%);
+      margin-left: -260px;
     }
 
     .sidebar-header {
@@ -257,13 +255,6 @@
       color: #666;
       transition: all 0.2s;
       border-radius: 6px;
-      font-size: 20px;
-      line-height: 1;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .sidebar-toggle:hover {
@@ -308,11 +299,10 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 12px;
-      border-radius: 8px;
       font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 8px;
       transition: all 0.2s;
-      font-family: inherit;
       font-weight: 500;
     }
 
@@ -321,45 +311,47 @@
       color: #1a1a1a;
     }
 
-    /* Messages Area */
+    /* Messages Container */
     .messages-container {
       flex: 1;
       overflow-y: auto;
-      padding: 24px;
+      overflow-x: hidden;
+      padding: 24px 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
+      background: #ffffff;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
     }
 
     .empty-state {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       text-align: center;
       color: #999;
+      margin-top: 100px;
     }
 
     .empty-state h2 {
-      font-size: 24px;
-      color: #1a1a1a;
+      font-size: 18px;
       margin-bottom: 8px;
+      color: #666;
       font-weight: 600;
     }
 
     .empty-state p {
       font-size: 14px;
+      color: #999;
     }
 
     .message {
       display: flex;
       flex-direction: column;
+      animation: slideIn 0.3s ease-out;
       gap: 8px;
-      animation: fadeIn 0.3s;
     }
 
-    @keyframes fadeIn {
+    @keyframes slideIn {
       from {
         opacity: 0;
         transform: translateY(10px);
@@ -371,69 +363,71 @@
     }
 
     .message-role {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .message.user .message-role {
-      color: #1a1a1a;
+      text-align: right;
     }
 
     .message-content {
-      padding: 14px 16px;
+      padding: 14px 18px;
       border-radius: 12px;
-      line-height: 1.6;
-      font-size: 14px;
-      max-width: 85%;
       word-wrap: break-word;
       white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.6;
+      border: 1px solid #e5e5e5;
     }
 
     .message.user .message-content {
-      background: #1a1a1a;
-      color: white;
-      align-self: flex-start;
+      background: #ffffff;
+      color: #1a1a1a;
+      align-self: flex-end;
+      max-width: 80%;
     }
 
     .message.assistant .message-content {
-      background: #f5f5f5;
+      background: #ffffff;
       color: #1a1a1a;
+      border: none;
+      padding: 0;
       align-self: flex-start;
+      max-width: 100%;
     }
 
     .message-image {
       max-width: 300px;
       border-radius: 8px;
       margin-top: 8px;
-      display: block;
     }
 
     .loading {
       display: flex;
       gap: 6px;
-      padding: 14px 16px;
-      background: #f5f5f5;
+      padding: 14px 18px;
+      background: white;
       border-radius: 12px;
       width: fit-content;
+      border: 1px solid #e5e5e5;
     }
 
     .loading-dot {
       width: 8px;
       height: 8px;
-      border-radius: 50%;
       background: #999;
+      border-radius: 50%;
       animation: bounce 1.4s infinite ease-in-out;
     }
 
-    .loading-dot:nth-child(1) {
-      animation-delay: -0.32s;
+    .loading-dot:nth-child(2) {
+      animation-delay: 0.2s;
     }
 
-    .loading-dot:nth-child(2) {
-      animation-delay: -0.16s;
+    .loading-dot:nth-child(3) {
+      animation-delay: 0.4s;
     }
 
     @keyframes bounce {
@@ -445,127 +439,47 @@
       }
     }
 
-    /* Input Area */
-    .input-area {
-      padding: 16px 24px;
+    /* Input Container */
+    .input-container {
       background: white;
       border-top: 1px solid #e5e5e5;
+      padding: 16px;
       flex-shrink: 0;
     }
 
-    .file-preview {
-      display: none;
-      padding: 10px 14px;
-      background: #f5f5f5;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: #666;
-    }
-
-    .file-preview.active {
-      display: flex;
-    }
-
-    .file-remove {
-      margin-left: auto;
-      background: none;
-      border: none;
-      color: #999;
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-      padding: 4px;
-      transition: color 0.2s;
-    }
-
-    .file-remove:hover {
-      color: #666;
-    }
-
     .input-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
       display: flex;
       gap: 8px;
       align-items: flex-end;
     }
 
-    .input-container {
-      flex: 1;
-      display: flex;
-      gap: 8px;
-      background: #f5f5f5;
-      border-radius: 12px;
-      padding: 4px;
-      align-items: flex-end;
-    }
-
-    .message-input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      padding: 10px 12px;
-      font-size: 14px;
-      resize: none;
-      max-height: 150px;
-      overflow-y: auto;
-      font-family: inherit;
-      line-height: 1.5;
-    }
-
-    .message-input:focus {
-      outline: none;
+    .file-upload-wrapper {
+      position: relative;
     }
 
     .file-upload-btn {
-      background: none;
-      border: none;
-      color: #666;
+      background: #f5f5f5;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 10px;
       cursor: pointer;
-      padding: 8px;
-      transition: all 0.2s;
-      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      line-height: 1;
+      transition: all 0.2s;
     }
 
     .file-upload-btn:hover {
       background: #e5e5e5;
-      color: #1a1a1a;
     }
 
-    .file-upload-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .file-upload-btn.hidden {
+      display: none;
     }
 
-    .send-btn {
-      background: #1a1a1a;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .send-btn:hover:not(:disabled) {
-      background: #2a2a2a;
-    }
-
-    .send-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* Prompt Engineering Section */
+    /* Prompt Engineering */
     .prompt-engineering {
       background: #f9f9f9;
       border: 1px solid #e5e5e5;
@@ -643,49 +557,117 @@
       flex: 1;
     }
 
-    /* Utility */
+
+    .file-upload-btn svg {
+      width: 20px;
+      height: 20px;
+      color: #666;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    .file-preview {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #666;
+      display: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-preview.active {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-preview button {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      line-height: 1;
+    }
+
+    #message-input {
+      flex: 1;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 15px;
+      resize: none;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+      max-height: 120px;
+    }
+
+    #message-input:focus {
+      border-color: #1a1a1a;
+    }
+
+    #send-btn {
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #send-btn:hover:not(:disabled) {
+      background: #2a2a2a;
+      transform: translateY(-1px);
+    }
+
+    #send-btn:disabled {
+      background: #e5e5e5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .hidden {
       display: none !important;
     }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #e5e5e5;
-      border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #d0d0d0;
-    }
-
-    /* Responsive */
+    /* Mobile Responsive */
     @media (max-width: 768px) {
       .sidebar {
-        position: absolute;
-        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
         z-index: 100;
       }
 
-      .header-left h1 {
-        font-size: 16px;
+      .sidebar.collapsed {
+        margin-left: -260px;
+      }
+
+      .main-content {
+        width: 100%;
       }
 
       .model-selector {
         font-size: 12px;
         padding: 6px 10px;
-      }
-
-      .message-content {
-        max-width: 95%;
       }
     }
   </style>
@@ -695,14 +677,17 @@
   <div id="login-screen">
     <div class="login-card">
       <h1>ASIAI</h1>
-      <p>AI-powered chat interface with GitHub Models</p>
+      <p>Sign in with your GitHub account<br>to use the AI chatbot</p>
       <button class="login-btn" id="login-btn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
         Sign in with GitHub
       </button>
-      <p class="login-info">Connect to use AI-powered features</p>
+      <div class="login-info">
+        <p>Free tier available</p>
+        <p>~150 requests per day limit</p>
+      </div>
     </div>
   </div>
 
@@ -711,55 +696,70 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <h2>Chats</h2>
+        <h2>Chat History</h2>
         <button class="new-chat-btn-sidebar" id="new-chat-btn">
-          <span>+</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
           New Chat
         </button>
       </div>
       <div class="chat-history" id="chat-history"></div>
       <div class="sidebar-footer">
         <div class="user-profile" id="user-profile">
-          <div class="user-avatar" id="user-avatar">?</div>
+          <div class="user-avatar" id="user-avatar">U</div>
           <div class="user-info">
             <div class="user-name" id="user-name">Loading...</div>
-            <div class="user-email" id="user-email"></div>
+            <div class="user-email" id="user-email">GitHub User</div>
           </div>
         </div>
+        <button class="logout-btn" id="logout-btn" style="width: 100%;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Logout
+        </button>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
+      <!-- Header -->
       <div class="header">
         <div class="header-left">
-          <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+          <button class="sidebar-toggle" id="sidebar-toggle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
           <h1>ASIAI</h1>
         </div>
         <div class="header-right">
           <select class="model-selector" id="model-selector">
-            <option value="gpt-4o">GPT-4o</option>
-            <option value="gpt-4o-mini">GPT-4o Mini</option>
-            <option value="o1-preview">o1 Preview</option>
-            <option value="o1-mini">o1 Mini</option>
+            <option value="openai/gpt-4o">GPT-4o</option>
+            <option value="openai/gpt-4o-mini">GPT-4o-mini</option>
+            <option value="mistral-ai/mistral-medium-2505">Mistral Medium</option>
+            <option value="cohere/cohere-command-a">Cohere Command A</option>
+            <option value="mistral-ai/Codestral-2501">Codestral</option>
           </select>
-          <button class="logout-btn" id="logout-btn">
-            <span>🚪</span>
-            Logout
-          </button>
         </div>
       </div>
 
-      <div class="messages-container" id="messages-container">
+      <!-- Messages -->
+      <div class="messages-container" id="messages">
         <div class="empty-state">
           <h2>Start a conversation</h2>
           <p>Type a message or upload an image</p>
         </div>
       </div>
 
-      <div class="input-area">
-        <!-- Prompt Engineering Section -->
-        <div class="prompt-engineering">
+        <!-- Prompt Engineering -->
+        <div class="prompt-engineering" style="max-width: 900px; margin: 0 auto;">
           <div class="prompt-engineering-header">
             <div class="prompt-engineering-title">
               <span>✨</span>
@@ -803,56 +803,64 @@
           </div>
         </div>
 
-        <div class="file-preview" id="file-preview">
-          <span>📎</span>
-          <span id="file-name"></span>
-          <button class="file-remove" id="file-remove">×</button>
-        </div>
+      <!-- Input -->
+      <div class="input-container">
         <div class="input-wrapper">
-          <div class="input-container">
-            <button class="file-upload-btn" id="file-upload-btn" title="Upload image">
-              📎
-            </button>
-            <input type="file" id="file-input" accept="image/*" style="display: none;">
-            <textarea 
-              class="message-input" 
-              id="message-input" 
-              placeholder="Type your message..." 
-              rows="1"
-            ></textarea>
+          <div class="file-upload-wrapper">
+            <label class="file-upload-btn" id="file-upload-label" for="file-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </label>
+            <input type="file" id="file-input" accept="image/*">
+            <div class="file-preview" id="file-preview">
+              <span id="file-name"></span>
+              <button id="file-remove">×</button>
+            </div>
           </div>
-          <button class="send-btn" id="send-btn">Send</button>
+          <textarea 
+            id="message-input" 
+            placeholder="Type a message..." 
+            rows="1"
+          ></textarea>
+          <button id="send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // DOM Elements
+    const CLIENT_ID = 'Ov23li3uJvzsuqgA9QHJ';
+    const REDIRECT_URI = window.location.origin;
+
     const loginScreen = document.getElementById('login-screen');
     const chatScreen = document.getElementById('chat-screen');
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
     const newChatBtn = document.getElementById('new-chat-btn');
-    const messagesContainer = document.getElementById('messages-container');
+    const messagesContainer = document.getElementById('messages');
     const messageInput = document.getElementById('message-input');
     const sendBtn = document.getElementById('send-btn');
+    const modelSelector = document.getElementById('model-selector');
     const fileInput = document.getElementById('file-input');
-    const fileUploadBtn = document.getElementById('file-upload-btn');
+    const fileUploadLabel = document.getElementById('file-upload-label');
     const filePreview = document.getElementById('file-preview');
     const fileName = document.getElementById('file-name');
     const fileRemove = document.getElementById('file-remove');
-    const modelSelector = document.getElementById('model-selector');
     const chatHistory = document.getElementById('chat-history');
     const userAvatar = document.getElementById('user-avatar');
     const userName = document.getElementById('user-name');
     const userEmail = document.getElementById('user-email');
-    const promptToggle = document.getElementById('prompt-toggle');
-    const promptOptions = document.getElementById('prompt-options');
 
-    // State
     let accessToken = null;
     let messages = [];
     let isLoading = false;
@@ -861,108 +869,13 @@
     let chatSessions = [];
     let currentChatId = null;
     let githubUser = null;
-    let sidebarCollapsed = false;
-
-    const GITHUB_CLIENT_ID = 'Ov23liIa2fxHJCuFyPr3';
-    const REDIRECT_URI = window.location.origin;
-    const AUTH_ENDPOINT = 'https://asiai.pages.dev/auth';
-
-    // Initialize
-    function init() {
-      const savedToken = sessionStorage.getItem('github_access_token');
-      if (savedToken) {
-        accessToken = savedToken;
-        showChatScreen();
-        loadChatSessions();
-        updateFileUploadVisibility();
-        fetchGitHubUser();
-      } else {
-        checkForAuthCode();
-      }
-    }
-
-    // Sidebar Toggle Function
-    function toggleSidebar() {
-      sidebarCollapsed = !sidebarCollapsed;
-      if (sidebarCollapsed) {
-        sidebar.classList.add('collapsed');
-        sidebarToggle.textContent = '☰';
-      } else {
-        sidebar.classList.remove('collapsed');
-        sidebarToggle.textContent = '✕';
-      }
-    }
-
-    // Prompt Engineering Toggle
-    function togglePromptOptions() {
-      const isCollapsed = promptOptions.classList.contains('collapsed');
-      if (isCollapsed) {
-        promptOptions.classList.remove('collapsed');
-        promptToggle.textContent = '−';
-      } else {
-        promptOptions.classList.add('collapsed');
-        promptToggle.textContent = '+';
-      }
-    }
-
-    // Prompt Template Click Handler
-    function handlePromptTemplateClick(e) {
-      const template = e.currentTarget;
-      const promptText = template.getAttribute('data-prompt');
-      messageInput.value = promptText + ' ';
-      messageInput.focus();
-      
-      // Auto-adjust textarea height
-      messageInput.style.height = 'auto';
-      messageInput.style.height = (messageInput.scrollHeight) + 'px';
-    }
-
-    // Add event listeners for prompt templates
-    document.querySelectorAll('.prompt-template').forEach(template => {
-      template.addEventListener('click', handlePromptTemplateClick);
-    });
-
-    promptToggle.addEventListener('click', togglePromptOptions);
-
-    function updateFileUploadVisibility() {
-      const selectedModel = modelSelector.value;
-      const visionModels = ['gpt-4o', 'gpt-4o-mini'];
-      const supportsVision = visionModels.includes(selectedModel);
-      fileUploadBtn.style.display = supportsVision ? 'flex' : 'none';
-      if (!supportsVision && uploadedFile) {
-        clearFile();
-      }
-    }
-
-    fileUploadBtn.addEventListener('click', () => {
-      fileInput.click();
-    });
 
     function generateId() {
       return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
-    function saveCurrentChat() {
-      if (messages.length === 0) return;
-
-      const chatIndex = chatSessions.findIndex(chat => chat.id === currentChatId);
-      const chatTitle = messages[0]?.content?.substring(0, 50) || 'New Chat';
-      
-      const chatData = {
-        id: currentChatId,
-        title: chatTitle,
-        messages: messages,
-        timestamp: Date.now()
-      };
-
-      if (chatIndex !== -1) {
-        chatSessions[chatIndex] = chatData;
-      } else {
-        chatSessions.unshift(chatData);
-      }
-
+    function saveChatSessions() {
       localStorage.setItem('chatSessions', JSON.stringify(chatSessions));
-      renderChatHistory();
     }
 
     function loadChatSessions() {
@@ -975,43 +888,65 @@
 
     function renderChatHistory() {
       chatHistory.innerHTML = '';
-      chatSessions.forEach(chat => {
+      chatSessions.forEach(session => {
         const item = document.createElement('div');
         item.className = 'chat-history-item';
-        if (chat.id === currentChatId) {
+        if (session.id === currentChatId) {
           item.classList.add('active');
         }
-        item.textContent = chat.title;
-        item.addEventListener('click', () => loadChat(chat.id));
+        item.textContent = session.title;
+        item.onclick = () => loadChat(session.id);
         chatHistory.appendChild(item);
       });
     }
 
-    function loadChat(chatId) {
-      if (messages.length > 0 && currentChatId !== chatId) {
-        saveCurrentChat();
+    function saveCurrentChat() {
+      if (messages.length === 0) return;
+
+      const existingIndex = chatSessions.findIndex(s => s.id === currentChatId);
+      const firstMessage = messages[0]?.content;
+      const title = (typeof firstMessage === 'string' ? firstMessage : 'New Chat').substring(0, 30);
+      
+      const chatData = {
+        id: currentChatId,
+        title: title,
+        messages: messages,
+        timestamp: Date.now()
+      };
+
+      if (existingIndex >= 0) {
+        chatSessions[existingIndex] = chatData;
+      } else {
+        chatSessions.unshift(chatData);
       }
 
-      const chat = chatSessions.find(c => c.id === chatId);
-      if (chat) {
-        currentChatId = chat.id;
-        messages = chat.messages;
-        messagesContainer.innerHTML = '';
-        
-        messages.forEach(msg => {
-          if (Array.isArray(msg.content)) {
-            const textPart = msg.content.find(c => c.type === 'text');
-            const imagePart = msg.content.find(c => c.type === 'image_url');
-            if (imagePart) {
-              addMessageWithImage('user', textPart?.text || '', imagePart.image_url.url, false);
-            }
-          } else {
-            addMessage(msg.role, msg.content, false);
-          }
-        });
+      saveChatSessions();
+      renderChatHistory();
+    }
 
+    function loadChat(chatId) {
+      const session = chatSessions.find(s => s.id === chatId);
+      if (session) {
+        currentChatId = chatId;
+        messages = session.messages;
+        renderMessages();
         renderChatHistory();
       }
+    }
+
+    function renderMessages() {
+      messagesContainer.innerHTML = '';
+      messages.forEach(msg => {
+        if (Array.isArray(msg.content)) {
+          const textPart = msg.content.find(c => c.type === 'text');
+          const imagePart = msg.content.find(c => c.type === 'image_url');
+          if (imagePart) {
+            addMessageWithImage('user', textPart?.text || '', imagePart.image_url.url, false);
+          }
+        } else {
+          addMessage(msg.role, msg.content, false);
+        }
+      });
     }
 
     async function fetchGitHubUser() {
@@ -1021,52 +956,82 @@
             'Authorization': `Bearer ${accessToken}`,
           }
         });
+        const data = await response.json();
+        githubUser = data;
         
-        if (response.ok) {
-          githubUser = await response.json();
-          userAvatar.textContent = githubUser.login.charAt(0).toUpperCase();
-          userName.textContent = githubUser.name || githubUser.login;
-          userEmail.textContent = githubUser.email || githubUser.login;
-        }
+        userName.textContent = data.name || data.login;
+        userEmail.textContent = data.login;
+        userAvatar.textContent = (data.name || data.login).charAt(0).toUpperCase();
       } catch (error) {
-        console.error('Failed to fetch GitHub user:', error);
+        console.error('Failed to fetch user:', error);
+        userName.textContent = 'GitHub User';
+      }
+    }
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('collapsed');
+    }
+
+    function updateFileUploadVisibility() {
+      const selectedModel = modelSelector.value;
+      const isGPTModel = selectedModel.startsWith('openai/gpt');
+      
+      if (isGPTModel) {
+        fileUploadLabel.classList.remove('hidden');
+      } else {
+        fileUploadLabel.classList.add('hidden');
+        clearFile();
+      }
+    }
+
+    function init() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      
+      if (code) {
+        exchangeCodeForToken(code);
+        return;
+      }
+
+      const savedToken = sessionStorage.getItem('github_access_token');
+      if (savedToken) {
+        accessToken = savedToken;
+        showChatScreen();
+        loadChatSessions();
+        updateFileUploadVisibility();
+        fetchGitHubUser();
       }
     }
 
     function handleLogin() {
-      const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=user:email`;
-      window.location.href = authUrl;
+      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=read:user`;
+      window.location.href = githubAuthUrl;
     }
 
-    async function checkForAuthCode() {
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get('code');
+    async function exchangeCodeForToken(code) {
+      try {
+        const response = await fetch('/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
 
-      if (code) {
-        try {
-          const response = await fetch(AUTH_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code }),
-          });
-
-          const data = await response.json();
-          
-          if (data.access_token) {
-            accessToken = data.access_token;
-            sessionStorage.setItem('github_access_token', data.access_token);
-            window.history.replaceState({}, document.title, '/');
-            showChatScreen();
-            loadChatSessions();
-            updateFileUploadVisibility();
-            fetchGitHubUser();
-          } else {
-            alert('Login failed: ' + (data.error || 'Unknown error'));
-          }
-        } catch (error) {
-          console.error('Login error:', error);
-          alert('Login failed');
+        const data = await response.json();
+        
+        if (data.access_token) {
+          accessToken = data.access_token;
+          sessionStorage.setItem('github_access_token', data.access_token);
+          window.history.replaceState({}, document.title, '/');
+          showChatScreen();
+          loadChatSessions();
+          updateFileUploadVisibility();
+          fetchGitHubUser();
+        } else {
+          alert('Login failed: ' + (data.error || 'Unknown error'));
         }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Login failed');
       }
     }
 
@@ -1341,6 +1306,34 @@
     messageInput.addEventListener('input', function() {
       this.style.height = 'auto';
       this.style.height = (this.scrollHeight) + 'px';
+    });
+
+
+    // Prompt Engineering Event Listeners
+    const promptToggle = document.getElementById('prompt-toggle');
+    const promptOptions = document.getElementById('prompt-options');
+    
+    if (promptToggle) {
+      promptToggle.addEventListener('click', function() {
+        const isCollapsed = promptOptions.classList.contains('collapsed');
+        if (isCollapsed) {
+          promptOptions.classList.remove('collapsed');
+          promptToggle.textContent = '−';
+        } else {
+          promptOptions.classList.add('collapsed');
+          promptToggle.textContent = '+';
+        }
+      });
+    }
+
+    document.querySelectorAll('.prompt-template').forEach(template => {
+      template.addEventListener('click', function() {
+        const promptText = this.getAttribute('data-prompt');
+        messageInput.value = promptText + ' ';
+        messageInput.focus();
+        messageInput.style.height = 'auto';
+        messageInput.style.height = (messageInput.scrollHeight) + 'px';
+      });
     });
 
     init();
