@@ -176,6 +176,13 @@
     .sidebar-footer {
       padding: 16px;
       border-top: 1px solid #e5e5e5;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sidebar-footer .new-chat-btn-sidebar {
+      margin-bottom: 0;
     }
 
     .user-profile {
@@ -185,7 +192,7 @@
       padding: 10px;
       background: white;
       border-radius: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 0;
     }
 
     .user-avatar {
@@ -798,6 +805,9 @@
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2>Chat History</h2>
+      </div>
+      <div class="chat-history" id="chat-history"></div>
+      <div class="sidebar-footer">
         <button class="new-chat-btn-sidebar" id="new-chat-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -805,9 +815,6 @@
           </svg>
           New Chat
         </button>
-      </div>
-      <div class="chat-history" id="chat-history"></div>
-      <div class="sidebar-footer">
         <div class="user-profile" id="user-profile">
           <div class="user-avatar" id="user-avatar">U</div>
           <div class="user-info">
