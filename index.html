@@ -605,12 +605,14 @@
     .prompt-modal-header {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
     }
 
     .prompt-modal-header h2 {
       font-size: 20px;
       font-weight: 600;
+      color: #1a1a1a;
     }
 
     .prompt-modal-close {
@@ -621,50 +623,78 @@
       cursor: pointer;
       padding: 4px;
       border-radius: 6px;
+      transition: all 0.2s;
     }
 
     .prompt-modal-close:hover {
       background: #f5f5f5;
+      color: #1a1a1a;
     }
 
-    .prompt-templates-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .prompt-template-item {
+    .prompt-custom-container {
       display: flex;
-      gap: 12px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .prompt-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .custom-prompt-input {
+      width: 100%;
       padding: 12px 16px;
-      background: #f9f9f9;
       border: 1px solid #e5e5e5;
       border-radius: 12px;
-      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 150px;
       transition: all 0.2s;
     }
 
-    .prompt-template-item:hover {
-      background: #f0f0f0;
+    .custom-prompt-input:focus {
+      outline: none;
       border-color: #1a1a1a;
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
     }
 
-    .prompt-icon {
-      font-size: 24px;
+    .prompt-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
     }
 
-    .prompt-text {
-      flex: 1;
-    }
-
-    .prompt-title {
+    .prompt-clear-btn, .prompt-apply-btn {
+      padding: 10px 20px;
+      border-radius: 10px;
       font-size: 14px;
       font-weight: 600;
-      margin-bottom: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
     }
 
-    .prompt-description {
-      font-size: 12px;
+    .prompt-clear-btn {
+      background: #f5f5f5;
       color: #666;
+    }
+
+    .prompt-clear-btn:hover {
+      background: #e5e5e5;
+      color: #1a1a1a;
+    }
+
+    .prompt-apply-btn {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .prompt-apply-btn:hover {
+      background: #2a2a2a;
     }
 
     .prompt-edit-btn {
@@ -674,16 +704,24 @@
       padding: 10px;
       cursor: pointer;
       transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .prompt-edit-btn:hover {
       background: #e5e5e5;
+      border-color: #1a1a1a;
     }
 
     .prompt-edit-btn svg {
       width: 20px;
       height: 20px;
       color: #666;
+    }
+
+    .prompt-edit-btn:hover svg {
+      color: #1a1a1a;
     }
 
 
@@ -699,6 +737,12 @@
 
       .sidebar.collapsed {
         margin-left: -260px;
+      }
+
+      .sidebar-header {
+        position: relative;
+        z-index: 51;
+        background: #fafafa;
       }
 
       .main-content {
@@ -829,7 +873,7 @@
             placeholder="Type a message..." 
             rows="1"
           ></textarea>
-          <button class="prompt-edit-btn" id="prompt-edit-btn" title="Prompt Templates">
+          <button class="prompt-edit-btn" id="prompt-edit-btn" title="Edit System Prompt">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -851,79 +895,27 @@
   <div class="prompt-modal" id="prompt-modal">
     <div class="prompt-modal-content">
       <div class="prompt-modal-header">
-        <h2>✨ Prompt Templates</h2>
+        <h2>✨ Custom System Prompt</h2>
         <button class="prompt-modal-close" id="prompt-modal-close">×</button>
       </div>
-      <div class="prompt-templates-grid">
-        <div class="prompt-template-item" data-prompt="Explain this concept in simple terms for a beginner: ">
-          <div class="prompt-icon">📚</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Explain Simply</div>
-            <div class="prompt-description">Break down complex concepts</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Analyze the pros and cons of: ">
-          <div class="prompt-icon">⚖️</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Pros & Cons Analysis</div>
-            <div class="prompt-description">Balanced evaluation</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Write a professional email about: ">
-          <div class="prompt-icon">✉️</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Professional Email</div>
-            <div class="prompt-description">Formal communication</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Create a step-by-step guide for: ">
-          <div class="prompt-icon">📝</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Step-by-Step Guide</div>
-            <div class="prompt-description">Detailed instructions</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Summarize the key points of: ">
-          <div class="prompt-icon">📋</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Summarize</div>
-            <div class="prompt-description">Concise overview</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Generate creative ideas for: ">
-          <div class="prompt-icon">💡</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Brainstorm Ideas</div>
-            <div class="prompt-description">Creative thinking</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Debug and fix this code: ">
-          <div class="prompt-icon">🐛</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Debug Code</div>
-            <div class="prompt-description">Find and fix errors</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Improve and refine this text: ">
-          <div class="prompt-icon">🌐</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Improve Writing</div>
-            <div class="prompt-description">Professional polish</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Compare and contrast: ">
-          <div class="prompt-icon">🔄</div>
-          <div class="prompt-text">
-            <div class="prompt-title">Compare & Contrast</div>
-            <div class="prompt-description">Detailed comparison</div>
-          </div>
-        </div>
-        <div class="prompt-template-item" data-prompt="Explain like I'm 5 years old: ">
-          <div class="prompt-icon">👶</div>
-          <div class="prompt-text">
-            <div class="prompt-title">ELI5</div>
-            <div class="prompt-description">Ultra simple explanation</div>
-          </div>
+      <div class="prompt-custom-container">
+        <label for="custom-prompt-input" class="prompt-label">
+          Enter your system prompt
+        </label>
+        <textarea 
+          id="custom-prompt-input" 
+          class="custom-prompt-input" 
+          placeholder="Write your custom system prompt here...
+
+Example:
+- You are a helpful coding assistant
+- Explain concepts simply for beginners
+- Always respond in a friendly tone"
+          rows="10"
+        ></textarea>
+        <div class="prompt-actions">
+          <button class="prompt-clear-btn" id="prompt-clear-btn">Clear</button>
+          <button class="prompt-apply-btn" id="prompt-apply-btn">Apply Prompt</button>
         </div>
       </div>
     </div>
@@ -1196,7 +1188,9 @@
           },
           body: JSON.stringify({
             model: selectedModel,
-            messages: [...messages, { role: 'user', content: userContent }],
+            messages: systemPrompt 
+            ? [{ role: 'system', content: systemPrompt }, ...messages, { role: 'user', content: userContent }]
+            : [...messages, { role: 'user', content: userContent }],
             temperature: 0.7,
             stream: true,
           }),
@@ -1402,23 +1396,37 @@
     });
 
 
-    // Prompt Modal Functionality
+    // System Prompt Management
+    let systemPrompt = '';
     const promptModal = document.getElementById('prompt-modal');
     const promptEditBtn = document.getElementById('prompt-edit-btn');
     const promptModalClose = document.getElementById('prompt-modal-close');
+    const customPromptInput = document.getElementById('custom-prompt-input');
+    const promptClearBtn = document.getElementById('prompt-clear-btn');
+    const promptApplyBtn = document.getElementById('prompt-apply-btn');
 
+    // Load saved prompt from localStorage
+    const savedPrompt = localStorage.getItem('custom_system_prompt');
+    if (savedPrompt && customPromptInput) {
+      customPromptInput.value = savedPrompt;
+      systemPrompt = savedPrompt;
+    }
+
+    // Open modal
     if (promptEditBtn && promptModal) {
       promptEditBtn.addEventListener('click', () => {
         promptModal.classList.add('active');
       });
     }
 
+    // Close modal
     if (promptModalClose && promptModal) {
       promptModalClose.addEventListener('click', () => {
         promptModal.classList.remove('active');
       });
     }
 
+    // Close on outside click
     if (promptModal) {
       promptModal.addEventListener('click', (e) => {
         if (e.target === promptModal) {
@@ -1427,20 +1435,30 @@
       });
     }
 
-    document.querySelectorAll('.prompt-template-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const promptText = item.getAttribute('data-prompt');
-        if (messageInput) {
-          messageInput.value = promptText;
-          messageInput.focus();
-          messageInput.style.height = 'auto';
-          messageInput.style.height = (messageInput.scrollHeight) + 'px';
-        }
-        if (promptModal) {
+    // Clear button
+    if (promptClearBtn && customPromptInput) {
+      promptClearBtn.addEventListener('click', () => {
+        customPromptInput.value = '';
+        systemPrompt = '';
+        localStorage.removeItem('custom_system_prompt');
+        alert('System prompt cleared!');
+      });
+    }
+
+    // Apply button
+    if (promptApplyBtn && customPromptInput && promptModal) {
+      promptApplyBtn.addEventListener('click', () => {
+        const newPrompt = customPromptInput.value.trim();
+        if (newPrompt) {
+          systemPrompt = newPrompt;
+          localStorage.setItem('custom_system_prompt', systemPrompt);
           promptModal.classList.remove('active');
+          alert('System prompt applied!\n\nThis will be used in all your conversations.');
+        } else {
+          alert('Please enter a system prompt first.');
         }
       });
-    });
+    }
 
 
     init();
